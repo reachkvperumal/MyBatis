@@ -1,7 +1,9 @@
 package com.example;
 
+import com.example.dao.PlayerMapper;
 import com.example.dao.PublisherMapper;
 import com.example.dao.UserDao;
+import com.example.model.PlayerInfo;
 import com.example.model.Publisher;
 import com.example.model.User;
 import org.junit.Test;
@@ -24,12 +26,13 @@ import static org.hamcrest.core.Is.is;
 public class DemoTest {
 
   @Autowired
-  PublisherMapper publisherMapper;  // Mybatis generated bean
+  PlayerMapper playerMapper;
+  //PublisherMapper publisherMapper;  // Mybatis generated bean
 
-  @Autowired
-  UserDao userDao;
+  /*@Autowired
+  UserDao userDao;*/
 
-  @Test
+  /*@Test
   public void findPublishers() {
     System.out.println( publisherMapper.getClass().getName());
     List<Publisher> publishers = publisherMapper.findAll();
@@ -38,22 +41,10 @@ public class DemoTest {
       assertThat(publisher.getName(), is(not(nullValue())));
     }
     assertThat(publishers.size(), is(greaterThan(0)));
-  }
+  }*/
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-  @Test
+ /* @Test
   public void findsSomeUsers() {
     List<User> allUsers = userDao.findOrderedUsers();
     for (User user : allUsers) {
@@ -61,5 +52,16 @@ public class DemoTest {
       assertThat(user.getUserName(), is(not(nullValue())));
     }
     assertThat(allUsers.size(), is(greaterThan(0)));
-  }
+  }*/
+
+ @Test
+  public void findMatchPlayers() throws Exception{
+   List<PlayerInfo> playersByMatchId = playerMapper.findPlayersByMatchId(1267);
+   playersByMatchId.forEach(t -> {
+     System.out.printf("Player Name : %s%nPlayer ID:%d%n", t.getPlayerName(), t.getPlayerId());
+   });
+
+   assertThat(playersByMatchId.size(), is(greaterThan(0)));
+ }
+
 }
